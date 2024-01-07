@@ -36,7 +36,7 @@ type PGInterface interface {
 
 	//Phong
 	DanhSachPhong() []model.DanhSachPhong
-	// Dịch vụ
+	DanhSachPhongTrong(heckinDate, checkoutDate, hangPhong, loaiPhong string) []model.DanhSachPhong // Dịch vụ
 	DanhSachDichVu() []model.DanhSachDichVu
 
 	DanhSachPhieuDatPhong() []model.DanhSachPhieuDatPhong

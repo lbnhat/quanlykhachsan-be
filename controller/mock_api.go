@@ -86,57 +86,91 @@ func (controller *MockController) HotelSearch(ctx *gin.Context) {
 
 func (controller *MockController) Room(ctx *gin.Context) {
 
-	type Room struct {
-		ID          int    `json:"id"`
-		Image       string `json:"image"`
-		TypeID      int    `json:"type_id"`
-		BedQuantity int    `json:"bed_quantity"`
-		Description string `json:"description"`
-		Price       int64  `json:"price"`
+	// type Room struct {
+	// 	ID          int    `json:"id"`
+	// 	Image       string `json:"image"`
+	// 	TypeID      int    `json:"type_id"`
+	// 	BedQuantity int    `json:"bed_quantity"`
+	// 	Description string `json:"description"`
+	// 	Price       int64  `json:"price"`
+	// }
+
+	type Phong struct {
+		IdPhong      int    `json:"id_phong"`
+		IdLoaiPhong  string `json:"id_loai_phong"`
+		SoTang       string `json:"so_tang"`
+		SoPhong      string `json:"so_phong"`
+		TrangThai    string `json:"trang_thai"`
+		HinhAnh      string `json:"hinh_anh"`
+		TenLoaiPhong string `json:"loai_phong"`
+		HangPhong    string `json:"hang_phong"`
+		Gia          int64  `json:"gia_phong"`
+		Mota         string `json:"mo_ta"`
 	}
 
-	hotel := append([]Room{}, Room{
-		ID:          1,
-		Image:       "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
-		TypeID:      2,
-		BedQuantity: 2,
-		Description: "Phòng đẹp thơm",
-		Price:       100000,
-	}, Room{
-		ID:          1,
-		Image:       "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
-		TypeID:      2,
-		BedQuantity: 2,
-		Description: "Phòng đẹp thơm",
-		Price:       100000,
-	}, Room{
-		ID:          1,
-		Image:       "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
-		TypeID:      2,
-		BedQuantity: 2,
-		Description: "Phòng đẹp thơm",
-		Price:       100000,
-	}, Room{
-		ID:          1,
-		Image:       "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
-		TypeID:      2,
-		BedQuantity: 2,
-		Description: "Phòng đẹp thơm",
-		Price:       100000,
-	}, Room{
-		ID:          1,
-		Image:       "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
-		TypeID:      2,
-		BedQuantity: 2,
-		Description: "Phòng đẹp thơm",
-		Price:       100000,
-	}, Room{
-		ID:          1,
-		Image:       "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
-		TypeID:      2,
-		BedQuantity: 2,
-		Description: "Phòng đẹp thơm",
-		Price:       100000,
+	hotel := append([]Phong{}, Phong{
+		IdPhong:      1,
+		HinhAnh:      "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
+		HangPhong:    "VIP",
+		SoTang:       "1",
+		Mota:         "Phòng đẹp",
+		Gia:          100000,
+		SoPhong:      "101",
+		TenLoaiPhong: "Đon",
+	}, Phong{
+		IdPhong:      1,
+		HinhAnh:      "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
+		HangPhong:    "VIP",
+		SoTang:       "1",
+		Mota:         "Phòng đẹp",
+		Gia:          200000,
+		SoPhong:      "102",
+		TenLoaiPhong: "Đon",
+	}, Phong{
+		IdPhong:      1,
+		HinhAnh:      "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
+		HangPhong:    "VIP",
+		SoTang:       "1",
+		Mota:         "Phòng đẹp",
+		Gia:          300000,
+		SoPhong:      "103",
+		TenLoaiPhong: "Đôi",
+	}, Phong{
+		IdPhong:      1,
+		HinhAnh:      "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
+		HangPhong:    "VIP",
+		SoTang:       "1",
+		Mota:         "Phòng đẹp",
+		Gia:          400000,
+		SoPhong:      "104",
+		TenLoaiPhong: "Đôi",
+	}, Phong{
+		IdPhong:      1,
+		HinhAnh:      "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
+		HangPhong:    "VIP",
+		SoTang:       "1",
+		Mota:         "Phòng đẹp",
+		Gia:          500000,
+		SoPhong:      "105",
+		TenLoaiPhong: "Đôi",
+	}, Phong{
+		IdPhong:      1,
+		HinhAnh:      "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
+		HangPhong:    "VIP",
+		SoTang:       "1",
+		Mota:         "Phòng đẹp",
+		Gia:          600000,
+		SoPhong:      "106",
+		TenLoaiPhong: "Đôi",
+	}, Phong{
+		IdPhong:      1,
+		HinhAnh:      "https://bizweb.dktcdn.net/100/153/764/products/giuong-ngu-hien-dai-72t.jpg?v=1691638130990",
+		HangPhong:    "VIP",
+		SoTang:       "1",
+		Mota:         "Phòng đẹp",
+		Gia:          700000,
+		SoPhong:      "107",
+		TenLoaiPhong: "Đơn",
 	})
 	ctx.Header("Content-Type", "application/json")
 	ctx.JSON(http.StatusOK, hotel)

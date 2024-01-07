@@ -21,9 +21,15 @@ func NewPhongService(repo repo.PGInterface, validate *validator.Validate) PhongS
 
 type PhongServiceInterface interface {
 	DanhSachPhong() []model.DanhSachPhong
+	DanhSachPhongTrong(checkinDate, checkoutDate, hangPhong, loaiPhong string) []model.DanhSachPhong
 }
 
 func (t *PhongService) DanhSachPhong() []model.DanhSachPhong {
 	result := t.repo.DanhSachPhong()
+	return result
+}
+
+func (t *PhongService) DanhSachPhongTrong(checkinDate, checkoutDate, hangPhong, loaiPhong string) []model.DanhSachPhong {
+	result := t.repo.DanhSachPhongTrong(checkinDate, checkoutDate, hangPhong, loaiPhong)
 	return result
 }

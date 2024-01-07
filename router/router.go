@@ -83,6 +83,7 @@ func NewRouter() *gin.Engine {
 
 	phongRouter := baseRouter.Group("/phong")
 	phongRouter.GET("", phongController.DanhSachPhong)
+	phongRouter.GET("/danh-sach-phong-trong", phongController.DanhSachPhongTrong)
 	// Dich vụ
 	dichvuRouter := baseRouter.Group("/dich-vu")
 	dichvuRouter.GET("", dichvuController.DanhSachDichVu)
