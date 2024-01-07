@@ -16,6 +16,16 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+func enableCORS(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
+}
+
+func handleOptions(w http.ResponseWriter, r *http.Request) {
+	enableCORS(&w)
+}
+
 func NewRouter() *gin.Engine {
 	db := config.DatabaseConnection()
 	validate := validator.New()
@@ -38,16 +48,20 @@ func NewRouter() *gin.Engine {
 	dichvuController := controller.NewDichVuController(dichvuService)
 	phieudatphongController := controller.NewPhieuDatPhongController(phieudatphongService)
 	hoadonController := controller.NewHoaDonController(hoadonService)
+
+	mockController := controller.NewMockController()
+
 	router := gin.Default()
+	http.HandleFunc("/", handleOptions)
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"PUT", "PATCH"},
-		AllowHeaders:     []string{"Origin"},
+		AllowMethods:     []string{"POST, GET, OPTIONS, PUT, DELETE"},
+		AllowHeaders:     []string{"Origin", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
-			return origin == "https://github.com"
-		},
+		// AllowOriginFunc: func(origin string) bool {
+		// 	return origin == "https://github.com"
+		// },
 		MaxAge: 12 * time.Hour,
 	}))
 	// add swagger
@@ -64,6 +78,7 @@ func NewRouter() *gin.Engine {
 	// Nhan vien
 	nhanvienRouter := baseRouter.Group("/nhan-vien")
 	nhanvienRouter.GET("", nhanVienController.DanhSachNhanVien)
+	nhanvienRouter.POST("/login", nhanVienController.Login)
 	// Phong
 
 	phongRouter := baseRouter.Group("/phong")
@@ -77,6 +92,11 @@ func NewRouter() *gin.Engine {
 
 	hoadonRouter := baseRouter.Group("/hoa-don")
 	hoadonRouter.GET("", hoadonController.DanhSachHoaDon)
+
+	//mock api
+	mockRouter := baseRouter.Group("/mock")
+	mockRouter.GET("hotel/search", mockController.HotelSearch)
+	mockRouter.GET("hotel/room/search", mockController.Room)
 
 	return router
 }
