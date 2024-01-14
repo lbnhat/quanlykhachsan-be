@@ -53,13 +53,13 @@ func (controller *NhanVienController) Login(ctx *gin.Context) {
 
 	user := UserModel{
 		ID:          5,
-		TenDangNhap: "nhat_le@gmail.com.com",
+		TenDangNhap: "nhat_le@gmail.com",
 		Password:    "secret123",
 		FirstName:   "Le",
 		LastName:    "Nhat",
 		Gender:      true,
 		PhoneNumber: "123456789",
-		Email:       "nhat_le@gmail.com.com",
+		Email:       "nhat_le@gmail.com",
 		RoleId:      1,
 		NgaySinh:    "2001-10-10",
 		Image:       "profile.jpg",
