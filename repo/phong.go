@@ -50,7 +50,7 @@ func (r *RepoPG) DanhSachPhongTrong(checkinDate, checkoutDate, hangPhong, loaiPh
 	if loaiPhong != "all" {
 		tx = tx.Where("lp.ten_loai_phong = ?", loaiPhong)
 	}
-	if err = tx.Select("*").Table("phong p").
+	if err = tx.Debug().Select("*").Table("phong p").
 		Joins("inner join loai_phong lp on  p.id_loai_phong =lp.id_loai_phong").
 		Joins(`left join chi_tiet_phieu_dat_phong ctpdp on
 		p.id_phong  = ctpdp.id_phong
@@ -58,7 +58,7 @@ func (r *RepoPG) DanhSachPhongTrong(checkinDate, checkoutDate, hangPhong, loaiPh
 			or (? between ctpdp.ngay_den and ctpdp.ngay_tra_phong)
 				or (? <= ctpdp.ngay_den
 					and ? >= ctpdp.ngay_tra_phong)
-					)`, checkinDate, checkoutDate, checkinDate, checkoutDate).
+					) where ctpdp.id_chi_tiet_phieu_dat_phong  is null`, checkinDate, checkoutDate, checkinDate, checkoutDate).
 		Find(&phong).Error; err != nil {
 		return nil
 	}

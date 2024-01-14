@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"time"
 
 	_ "quanlykhachsan/docs"
 	"quanlykhachsan/model"
@@ -39,28 +38,30 @@ func (controller *NhanVienController) DanhSachNhanVien(ctx *gin.Context) {
 func (controller *NhanVienController) Login(ctx *gin.Context) {
 
 	type UserModel struct {
-		Username    string    `json:"username"`
-		Password    string    `json:"password"`
-		FirstName   string    `json:"firstName"`
-		LastName    string    `json:"lastName"`
-		Gender      bool      `json:"gender"`
-		PhoneNumber string    `json:"phoneNumber"`
-		Email       string    `json:"email"`
-		RoleId      int64     `json:"roleId"`
-		Birthday    time.Time `json:"birthday"`
-		Image       string    `json:"image"`
+		ID          int    `json:"id"`
+		TenDangNhap string `json:"ten_dang_nhap"`
+		Password    string `json:"password"`
+		FirstName   string `json:"firstName"`
+		LastName    string `json:"lastName"`
+		Gender      bool   `json:"gender"`
+		PhoneNumber string `json:"phoneNumber"`
+		Email       string `json:"email"`
+		RoleId      int64  `json:"roleId"`
+		NgaySinh    string `json:"ngay_sinh"`
+		Image       string `json:"image"`
 	}
 
 	user := UserModel{
-		Username:    "john_doe",
+		ID:          5,
+		TenDangNhap: "nhat_le@gmail.com.com",
 		Password:    "secret123",
-		FirstName:   "John",
-		LastName:    "Doe",
+		FirstName:   "Le",
+		LastName:    "Nhat",
 		Gender:      true,
 		PhoneNumber: "123456789",
-		Email:       "john.doe@example.com",
-		RoleId:      2,
-		Birthday:    time.Now(),
+		Email:       "nhat_le@gmail.com.com",
+		RoleId:      1,
+		NgaySinh:    "2001-10-10",
 		Image:       "profile.jpg",
 	}
 	// webResponse := model.Response{
@@ -72,6 +73,7 @@ func (controller *NhanVienController) Login(ctx *gin.Context) {
 
 	response := make(map[string]interface{})
 	response["user"] = user
+	response["roleId"] = 1
 	jsonResponse, _ := json.Marshal(response)
 	fmt.Println(string(jsonResponse))
 	// webResponse := model.Response{

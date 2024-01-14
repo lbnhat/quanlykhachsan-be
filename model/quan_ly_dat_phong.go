@@ -1,12 +1,13 @@
 package model
 
 type PhieuDatPhong struct {
-	IdPhieuDatPhong int    `json:"id_phieu_dat_phong"`
-	IdNhanVien      string `json:"id_nhan_vien"`
-	IdKhachHang     string `json:"id_khach_hang"`
+	IdPhieuDatPhong int    `json:"id_phieu_dat_phong" gorm:"primaryKey"`
+	IdNhanVien      int    `json:"id_nhan_vien"`
+	IdKhachHang     int    `json:"id_khach_hang"`
 	NgayLapPhieu    string `json:"ngay_lap_phieu"`
 	NgayDen         string `json:"ngay_den"`
-	TinhTrang       string `json:"tinh_trang"`
+	TrangThai       string `json:"trang_thai"`
+	TongTien        int    `json:"tong_tien"`
 }
 
 func (PhieuDatPhong) TableName() string {
@@ -14,11 +15,11 @@ func (PhieuDatPhong) TableName() string {
 }
 
 type ChiTietPhieuDatPhong struct {
-	IdChiTietPhieuDatPhong int    `json:"id_chi_tiet_phieu_dat_phong"`
-	IdPhieuDatPhong        string `json:"id_phieu_dat_phong"`
-	IdPhong                string `json:"id_phong"`
+	IdChiTietPhieuDatPhong int    `json:"id_chi_tiet_phieu_dat_phong" gorm:"primaryKey"`
+	IdPhieuDatPhong        int    `json:"id_phieu_dat_phong"`
+	IdPhong                int    `json:"id_phong"`
 	NgayDen                string `json:"ngay_den"`
-	NgayTra                string `json:"ngay_tra_phong"`
+	NgayTraPhong           string `json:"ngay_tra_phong"`
 }
 
 func (ChiTietPhieuDatPhong) TableName() string {
@@ -62,23 +63,57 @@ type DanhSachPhieuDatPhong struct {
 		Sdt          string `json:"sdt"`
 	} `json:"thong_tin_khach_hang" gorm:"foreignKey:id_khach_hang;references:id_khach_hang"`
 	ThongTinPhong []struct {
-		IdPhong   string `json:"id_phong"`
-		MaPhong   string `json:"ma_phong"`
-		Tang      string `json:"tang"`
-		LoaiPhong string `json:"loai_phong"`
-		HangPhong string `json:"hang_phong"`
-		Gia       int    `json:"gia"`
-	} `json:"thong_tin_phong" gorm:"foreignKey:id_phong;references:id_phong"`
+		IdPhieuDatPhong string `json:"id_phieu_dat_phong"`
+		IdPhong         string `json:"id_phong"`
+		SoPhong         string `json:"so_phong"`
+		Tang            string `json:"tang"`
+		TenLoaiPhong    string `json:"ten_loai_phong"`
+		HangPhong       string `json:"hang_phong"`
+		Gia             int    `json:"gia"`
+		NgayDen         string `json:"ngay_den"`
+		NgayTraPhong    string `json:"ngay_tra_phong"`
+	} `json:"thong_tin_phong" gorm:"foreignKey:id_phieu_dat_phong;references:id_phieu_dat_phong"`
 	ThongTinDichVu []struct {
 		IdDichVu  string `json:"id_dich_vu"`
 		TenDichVu string `json:"ten_dich_vu"`
 		SoLuong   int    `json:"so_luong"`
 		Gia       int    `json:"gia"`
 	} `json:"thong_tin_dich_vu"  gorm:"foreignKey:id_dich_vu;references:id_dich_vu"`
-	GiaPhong  int    `json:"gia_phong"`
-	GiaDichVu int    `json:"gia_dich_vu"`
-	TongTien  int    `json:"tong_tien"`
-	NgayDen   string `json:"ngay_den"`
-	NgayDi    string `json:"ngay_di"`
+	GiaPhong  int `json:"gia_phong"`
+	GiaDichVu int `json:"gia_dich_vu"`
+	TongTien  int `json:"tong_tien"`
+	// NgayDen   string `json:"ngay_den"`
+	// NgayDi    string `json:"ngay_di"`
 	ThoiGian  string `json:"thoi_gian"`
+	TrangThai string `json:"trang_thai"`
+}
+
+type DatPhongRequest struct {
+	UserID        int    `json:"user_id"`
+	Email         string `json:"email"`
+	Sdt           string `json:"sdt"`
+	TenKhachHang  string `json:"ten_khach_hang"`
+	Cmnd          string `json:"cmnd"`
+	CheckinDate   string `json:"checkinDate"`
+	CheckoutDate  string `json:"checkoutDate"`
+	DanhSachPhong []struct {
+		IDPhong     int    `json:"id_phong"`
+		IDLoaiPhong string `json:"id_loai_phong"`
+		SoTang      string `json:"so_tang"`
+		SoPhong     string `json:"so_phong"`
+		TrangThai   bool   `json:"trang_thai"`
+		HinhAnh     string `json:"hinh_anh"`
+		LoaiPhong   string `json:"loai_phong"`
+		HangPhong   string `json:"hang_phong"`
+		GiaPhong    string `json:"gia_phong"`
+	} `json:"danh_sach_phong"`
+	DanhSachDichVu []struct {
+		IDDichVu        int    `json:"id_dich_vu"`
+		TenDichVu       string `json:"ten_dich_vu"`
+		GiaDichVu       int    `json:"gia_dich_vu"`
+		IDChiTietDichVu int    `json:"id_chi_tiet_dich_vu"`
+		IDPhieuDichVu   string `json:"id_phieu_dich_vu"`
+		SoLuong         int    `json:"so_luong"`
+	} `json:"danh_sach_dich_vu"`
+	TongTien int `json:"tong_tien"`
 }

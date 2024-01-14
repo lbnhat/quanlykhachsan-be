@@ -30,6 +30,8 @@ type PGInterface interface {
 
 	//KhachHang
 	DanhSachKhachHang() []model.KhachHang
+	TaoKhachHang(req *model.KhachHang) error
+	TimKhachHang(id int, req *model.KhachHang) error
 
 	//NhanVien
 	DanhSachNhanVien() []model.NhanVien
@@ -39,9 +41,14 @@ type PGInterface interface {
 	DanhSachPhongTrong(heckinDate, checkoutDate, hangPhong, loaiPhong string) []model.DanhSachPhong // Dịch vụ
 	DanhSachDichVu() []model.DanhSachDichVu
 
-	DanhSachPhieuDatPhong() []model.DanhSachPhieuDatPhong
+	DanhSachPhieuDatPhong(idKhach int) []model.DanhSachPhieuDatPhong
+	TaoPhieuDatPhong(req *model.PhieuDatPhong) error
+	TaoChiTietPhieuDatPhong(req *model.ChiTietPhieuDatPhong) error
 
 	DanhSachHoaDon() []model.HoaDon
+
+	TaoPhieuDichvu(req *model.PhieuDichVu) error
+	TaoChiTietDichVu(req *model.ChiTietDichVu) error
 }
 
 type RepoPG struct {

@@ -1,7 +1,7 @@
 package model
 
 type KhachHang struct {
-	IdKhachHang  int    `json:"id_khach_hang"`
+	IdKhachHang  int    `json:"id_khach_hang" gorm:"primaryKey"`
 	TenKhachHang string `json:"ten_khach_hang"`
 	GioiTinh     string `json:"gioi_tinh"`
 	Sdt          string `json:"sdt"`

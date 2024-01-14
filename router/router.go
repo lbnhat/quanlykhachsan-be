@@ -38,7 +38,7 @@ func NewRouter() *gin.Engine {
 	nhanvienService := service.NewNhanVienService(repoPG, validate)
 	phongService := service.NewPhongService(repoPG, validate)
 	dichvuService := service.NewDichVuService(repoPG, validate)
-	phieudatphongService := service.NewPhieuDatPhongService(repoPG, validate)
+	datphongService := service.NewDatPhongService(repoPG, validate)
 	hoadonService := service.NewHoaDonService(repoPG, validate)
 
 	// Controller
@@ -46,7 +46,7 @@ func NewRouter() *gin.Engine {
 	nhanVienController := controller.NewNhanVienController(nhanvienService)
 	phongController := controller.NewPhongController(phongService)
 	dichvuController := controller.NewDichVuController(dichvuService)
-	phieudatphongController := controller.NewPhieuDatPhongController(phieudatphongService)
+	datphongController := controller.NewDatPhongController(datphongService)
 	hoadonController := controller.NewHoaDonController(hoadonService)
 
 	mockController := controller.NewMockController()
@@ -78,7 +78,8 @@ func NewRouter() *gin.Engine {
 	// Nhan vien
 	nhanvienRouter := baseRouter.Group("/nhan-vien")
 	nhanvienRouter.GET("", nhanVienController.DanhSachNhanVien)
-	nhanvienRouter.POST("/login", nhanVienController.Login)
+	nhanvienRouter.POST("/dang-nhap", nhanVienController.Login)
+	nhanvienRouter.POST("/dang-ki", nhanVienController.Login)
 	// Phong
 
 	phongRouter := baseRouter.Group("/phong")
@@ -88,8 +89,10 @@ func NewRouter() *gin.Engine {
 	dichvuRouter := baseRouter.Group("/dich-vu")
 	dichvuRouter.GET("", dichvuController.DanhSachDichVu)
 
-	phieudatphongRouter := baseRouter.Group("/phieu-dat-phong")
-	phieudatphongRouter.GET("", phieudatphongController.DanhSachPhieuDatPhong)
+	datphongRouter := baseRouter.Group("/dat-phong")
+	datphongRouter.GET("", datphongController.DanhSachPhieuDatPhong)
+	datphongRouter.GET("/khach-hang", datphongController.DanhSachPhieuDatPhongTuKhachHang)
+	datphongRouter.POST("/dat", datphongController.DatPhong)
 
 	hoadonRouter := baseRouter.Group("/hoa-don")
 	hoadonRouter.GET("", hoadonController.DanhSachHoaDon)

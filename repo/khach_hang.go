@@ -7,7 +7,6 @@ import (
 
 // FindAll implements TagsRepository
 func (r *RepoPG) DanhSachKhachHang() []model.KhachHang {
-
 	tx, cancel := r.DBWithTimeout(context.Background())
 	defer cancel()
 	var err error
@@ -17,4 +16,24 @@ func (r *RepoPG) DanhSachKhachHang() []model.KhachHang {
 	}
 
 	return khachhang
+}
+
+func (r *RepoPG) TaoKhachHang(req *model.KhachHang) error {
+	tx, cancel := r.DBWithTimeout(context.Background())
+	defer cancel()
+	var err error
+	if err = tx.Create(&req).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *RepoPG) TimKhachHang(id int, req *model.KhachHang) error {
+	tx, cancel := r.DBWithTimeout(context.Background())
+	defer cancel()
+	var err error
+	if err = tx.Where("id_khach_hang = ?", id).Find(&req).Error; err != nil {
+		return err
+	}
+	return nil
 }
