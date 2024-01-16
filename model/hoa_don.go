@@ -1,11 +1,11 @@
 package model
 
 type HoaDon struct {
-	IdHoaDon        int    `json:"id_hoa_don"`
-	IdNhanVien      string `json:"id_nhan_vien"`
-	IdPhieuDatPhong string `json:"id_phieu_dat_phong"`
+	IdHoaDon        int    `json:"id_hoa_don" gorm:"primaryKey"`
+	IdNhanVien      int    `json:"id_nhan_vien"`
+	IdPhieuDatPhong int    `json:"id_phieu_dat_phong"`
 	NgayLapPhieu    string `json:"ngay_lap_phieu"`
-	TongTien        string `json:"tong_tien"`
+	TongTien        int    `json:"tong_tien"`
 }
 
 func (HoaDon) TableName() string {

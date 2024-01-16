@@ -21,18 +21,19 @@ func NewDatPhongService(repo repo.PGInterface, validate *validator.Validate) Dat
 }
 
 type DatPhongServiceInterface interface {
-	DanhSachPhieuDatPhong() []model.DanhSachPhieuDatPhong
+	DanhSachPhieuDatPhong(trangThai string) []model.DanhSachPhieuDatPhong
 	DanhSachPhieuDatPhongTuKhach(idKhach int) []model.DanhSachPhieuDatPhong
 	DatPhong(req model.DatPhongRequest) (err error)
+	CapNhatPhong(req model.CapNhatPhong) (err error)
 }
 
-func (t *DatPhongService) DanhSachPhieuDatPhong() []model.DanhSachPhieuDatPhong {
-	result := t.repo.DanhSachPhieuDatPhong(0)
+func (t *DatPhongService) DanhSachPhieuDatPhong(trangThai string) []model.DanhSachPhieuDatPhong {
+	result := t.repo.DanhSachPhieuDatPhong(0, trangThai)
 	return result
 }
 
 func (t *DatPhongService) DanhSachPhieuDatPhongTuKhach(idKhach int) []model.DanhSachPhieuDatPhong {
-	result := t.repo.DanhSachPhieuDatPhong(idKhach)
+	result := t.repo.DanhSachPhieuDatPhong(idKhach, "")
 	return result
 }
 
@@ -108,6 +109,30 @@ func (t *DatPhongService) DatPhong(req model.DatPhongRequest) (err error) {
 		}
 	}
 
+	return nil
+}
+
+func (t *DatPhongService) CapNhatPhong(req model.CapNhatPhong) (err error) {
+
+	pdp, err := t.repo.LayPhieuDatPhong(req.IdPhieuDatPhong)
+	pdp.TrangThai = req.TrangThai
+	err = t.repo.CapNhatPhieuDatPhong(&pdp)
+	if err != nil {
+		return err
+	}
+
+	if req.TrangThai == "Đã thanh toán" {
+		hd := model.HoaDon{
+			IdPhieuDatPhong: pdp.IdPhieuDatPhong,
+			NgayLapPhieu:    time.Now().Format("2006-01-02"),
+			TongTien:        pdp.TongTien,
+			IdNhanVien:      222,
+		}
+		err = t.repo.TaoHoaDon(&hd)
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 

@@ -20,10 +20,10 @@ func NewHoaDonService(repo repo.PGInterface, validate *validator.Validate) HoaDo
 }
 
 type HoaDonServiceInterface interface {
-	DanhSachHoaDon() []model.HoaDon
+	DanhSachHoaDon() []model.DanhSachHoaDon
 }
 
-func (t *HoaDonService) DanhSachHoaDon() []model.HoaDon {
+func (t *HoaDonService) DanhSachHoaDon() []model.DanhSachHoaDon {
 	result := t.repo.DanhSachHoaDon()
 	return result
 }

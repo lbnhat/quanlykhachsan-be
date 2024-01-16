@@ -41,14 +41,17 @@ type PGInterface interface {
 	DanhSachPhongTrong(heckinDate, checkoutDate, hangPhong, loaiPhong string) []model.DanhSachPhong // Dịch vụ
 	DanhSachDichVu() []model.DanhSachDichVu
 
-	DanhSachPhieuDatPhong(idKhach int) []model.DanhSachPhieuDatPhong
+	DanhSachPhieuDatPhong(idKhach int, trangThai string) []model.DanhSachPhieuDatPhong
 	TaoPhieuDatPhong(req *model.PhieuDatPhong) error
 	TaoChiTietPhieuDatPhong(req *model.ChiTietPhieuDatPhong) error
-
-	DanhSachHoaDon() []model.HoaDon
+	LayPhieuDatPhong(IdPhieuDatPhong int) (model.PhieuDatPhong, error)
+	CapNhatPhieuDatPhong(req *model.PhieuDatPhong) error
 
 	TaoPhieuDichvu(req *model.PhieuDichVu) error
 	TaoChiTietDichVu(req *model.ChiTietDichVu) error
+
+	TaoHoaDon(req *model.HoaDon) error
+	DanhSachHoaDon() []model.DanhSachHoaDon
 }
 
 type RepoPG struct {

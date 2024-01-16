@@ -24,7 +24,26 @@ func NewDatPhongController(service service.DatPhongServiceInterface) *DatPhongCo
 
 func (controller *DatPhongController) DanhSachPhieuDatPhong(ctx *gin.Context) {
 	log.Info().Msg("findAll tags")
-	phieuDatPhongResponse := controller.datPhongService.DanhSachPhieuDatPhong()
+	trangThai := ctx.Query("trang_thai")
+	phieuDatPhongResponse := controller.datPhongService.DanhSachPhieuDatPhong(trangThai)
+	webResponse := model.Response{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   phieuDatPhongResponse,
+	}
+	ctx.Header("Content-Type", "application/json")
+	ctx.JSON(http.StatusOK, webResponse)
+
+}
+
+func (controller *DatPhongController) CapNhatPhong(ctx *gin.Context) {
+	log.Info().Msg("findAll tags")
+	var requestBody model.CapNhatPhong
+	if err := ctx.BindJSON(&requestBody); err != nil {
+		ctx.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	phieuDatPhongResponse := controller.datPhongService.CapNhatPhong(requestBody)
 	webResponse := model.Response{
 		Code:   http.StatusOK,
 		Status: "Ok",

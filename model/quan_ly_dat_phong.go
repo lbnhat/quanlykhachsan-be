@@ -74,11 +74,12 @@ type DanhSachPhieuDatPhong struct {
 		NgayTraPhong    string `json:"ngay_tra_phong"`
 	} `json:"thong_tin_phong" gorm:"foreignKey:id_phieu_dat_phong;references:id_phieu_dat_phong"`
 	ThongTinDichVu []struct {
-		IdDichVu  string `json:"id_dich_vu"`
-		TenDichVu string `json:"ten_dich_vu"`
-		SoLuong   int    `json:"so_luong"`
-		Gia       int    `json:"gia"`
-	} `json:"thong_tin_dich_vu"  gorm:"foreignKey:id_dich_vu;references:id_dich_vu"`
+		IdPhieuDatPhong string `json:"id_phieu_dat_phong"`
+		IdDichVu        string `json:"id_dich_vu"`
+		TenDichVu       string `json:"ten_dich_vu"`
+		SoLuong         int    `json:"so_luong"`
+		GiaDichVu       int    `json:"gia_dich_vu"`
+	} `json:"thong_tin_dich_vu"  gorm:"foreignKey:id_phieu_dat_phong;references:id_phieu_dat_phong"`
 	GiaPhong  int `json:"gia_phong"`
 	GiaDichVu int `json:"gia_dich_vu"`
 	TongTien  int `json:"tong_tien"`
@@ -116,4 +117,9 @@ type DatPhongRequest struct {
 		SoLuong         int    `json:"so_luong"`
 	} `json:"danh_sach_dich_vu"`
 	TongTien int `json:"tong_tien"`
+}
+
+type CapNhatPhong struct {
+	IdPhieuDatPhong int    `json:"id_phieu_dat_phong"`
+	TrangThai       string `json:"trang_thai"`
 }
