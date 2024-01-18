@@ -8,6 +8,7 @@ type KhachHang struct {
 	Cmnd         string `json:"so_cmnd"`
 	Email        string `json:"email"`
 	DiaChi       string `json:"dia_chi"`
+	NgaySinh     string `json:"ngay_sinh"`
 }
 
 func (KhachHang) TableName() string {

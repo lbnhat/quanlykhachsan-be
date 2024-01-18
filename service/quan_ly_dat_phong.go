@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"quanlykhachsan/model"
 	"quanlykhachsan/repo"
 	"time"
@@ -25,6 +26,7 @@ type DatPhongServiceInterface interface {
 	DanhSachPhieuDatPhongTuKhach(idKhach int) []model.DanhSachPhieuDatPhong
 	DatPhong(req model.DatPhongRequest) (err error)
 	CapNhatPhong(req model.CapNhatPhong) (err error)
+	BaoCao(option string) (rs model.BaoCao)
 }
 
 func (t *DatPhongService) DanhSachPhieuDatPhong(trangThai string) []model.DanhSachPhieuDatPhong {
@@ -44,7 +46,9 @@ func (t *DatPhongService) DatPhong(req model.DatPhongRequest) (err error) {
 		Cmnd:         req.Cmnd,
 		Email:        req.Email,
 	}
-
+	if len(req.DanhSachPhong) == 0 {
+		return fmt.Errorf("Thiếu thông tin phòng")
+	}
 	if req.UserID != 0 {
 		err = t.repo.TimKhachHang(req.UserID, &kh)
 		if err != nil {
@@ -97,15 +101,17 @@ func (t *DatPhongService) DatPhong(req model.DatPhongRequest) (err error) {
 	}
 
 	for _, v := range req.DanhSachDichVu {
-		ctdv := model.ChiTietDichVu{
-			IdDichVu:      v.IDDichVu,
-			IdPhieuDichVu: pdv.IdPhieuDichVu,
-			SoLuong:       v.SoLuong,
-			GiaDichVu:     v.GiaDichVu,
-		}
-		err = t.repo.TaoChiTietDichVu(&ctdv)
-		if err != nil {
-			return err
+		if v.SoLuong != 0 {
+			ctdv := model.ChiTietDichVu{
+				IdDichVu:      v.IDDichVu,
+				IdPhieuDichVu: pdv.IdPhieuDichVu,
+				SoLuong:       v.SoLuong,
+				GiaDichVu:     v.GiaDichVu,
+			}
+			err = t.repo.TaoChiTietDichVu(&ctdv)
+			if err != nil {
+				return err
+			}
 		}
 	}
 
@@ -140,3 +146,48 @@ func (t *DatPhongService) CapNhatPhong(req model.CapNhatPhong) (err error) {
 
 // ALTER TABLE public.phieu_dat_phong
 // ALTER COLUMN id_phieu_dat_phong SET DEFAULT nextval('phieu_dat_phong_id_phieu_dat_phong_seq'::regclass);
+
+func (t *DatPhongService) BaoCao(option string) (rs model.BaoCao) {
+	switch option {
+	case "ngay":
+		result := t.repo.BaoCaoTheoNgay()
+		tongTien := 0
+		for _, v := range result {
+			tongTien += v.TongTien
+		}
+		return model.BaoCao{
+			TongTien: tongTien,
+			BieuDo:   result,
+		}
+	case "tuan":
+		result := t.repo.BaoCaoTheoTuan()
+		tongTien := 0
+		for _, v := range result {
+			tongTien += v.TongTien
+		}
+		return model.BaoCao{
+			TongTien: tongTien,
+			BieuDo:   result,
+		}
+	case "nam":
+		result := t.repo.BaoCaoTheoNam()
+		tongTien := 0
+		for _, v := range result {
+			tongTien += v.TongTien
+		}
+		return model.BaoCao{
+			TongTien: tongTien,
+			BieuDo:   result,
+		}
+	default:
+		result := t.repo.BaoCaoTheoThang()
+		tongTien := 0
+		for _, v := range result {
+			tongTien += v.TongTien
+		}
+		return model.BaoCao{
+			TongTien: tongTien,
+			BieuDo:   result,
+		}
+	}
+}

@@ -123,3 +123,13 @@ type CapNhatPhong struct {
 	IdPhieuDatPhong int    `json:"id_phieu_dat_phong"`
 	TrangThai       string `json:"trang_thai"`
 }
+
+type BaoCaoTheoNgay struct {
+	TongTien int    `json:"tong_tien"`
+	Ngay     string `json:"ngay"`
+}
+
+type BaoCao struct {
+	TongTien int              `json:"tong_tien"`
+	BieuDo   []BaoCaoTheoNgay `json:"bieu_do"`
+}

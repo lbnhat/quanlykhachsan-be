@@ -95,6 +95,8 @@ func NewRouter() *gin.Engine {
 	datphongRouter.POST("/dat", datphongController.DatPhong)
 	datphongRouter.POST("/cap-nhat-trang-thai", datphongController.CapNhatPhong)
 
+	datphongRouter.GET("/bao-cao", datphongController.BaoCaoTheoNgay)
+
 	hoadonRouter := baseRouter.Group("/hoa-don")
 	hoadonRouter.GET("", hoadonController.DanhSachHoaDon)
 

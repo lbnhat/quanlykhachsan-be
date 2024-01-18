@@ -37,3 +37,15 @@ func (r *RepoPG) TimKhachHang(id int, req *model.KhachHang) error {
 	}
 	return nil
 }
+
+func (r *RepoPG) LayThongTinKhachHang(IdKhachHang int) *model.KhachHang {
+	tx, cancel := r.DBWithTimeout(context.Background())
+	defer cancel()
+	var err error
+	var khachHang model.KhachHang
+	if err = tx.Where("id_khach_hang = ?", IdKhachHang).Find(&khachHang).Error; err != nil {
+		return nil
+	}
+
+	return &khachHang
+}

@@ -9,6 +9,7 @@ type NhanVien struct {
 	ChucVu      string `json:"chuc_vu"`
 	DiaChi      string `json:"dia_chi"`
 	NgayVaoLam  string `json:"ngay_vao_lam"`
+	NgaySinh    string `json:"ngay_sinh"`
 }
 
 func (NhanVien) TableName() string {

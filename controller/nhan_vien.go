@@ -36,34 +36,49 @@ func (controller *NhanVienController) DanhSachNhanVien(ctx *gin.Context) {
 
 }
 func (controller *NhanVienController) Login(ctx *gin.Context) {
-
-	type UserModel struct {
-		ID          int    `json:"id"`
-		TenDangNhap string `json:"ten_dang_nhap"`
-		Password    string `json:"password"`
-		FirstName   string `json:"firstName"`
-		LastName    string `json:"lastName"`
-		Gender      bool   `json:"gender"`
-		PhoneNumber string `json:"phoneNumber"`
-		Email       string `json:"email"`
-		RoleId      int64  `json:"roleId"`
-		NgaySinh    string `json:"ngay_sinh"`
-		Image       string `json:"image"`
+	var requestBody model.DangNhap
+	if err := ctx.BindJSON(&requestBody); err != nil {
+		ctx.JSON(400, gin.H{"error": err.Error()})
+		return
 	}
 
-	user := UserModel{
-		ID:          5,
-		TenDangNhap: "nhat_le@gmail.com",
-		Password:    "secret123",
-		FirstName:   "Le",
-		LastName:    "Nhat",
-		Gender:      true,
-		PhoneNumber: "123456789",
-		Email:       "nhat_le@gmail.com",
-		RoleId:      1,
-		NgaySinh:    "2001-10-10",
-		Image:       "profile.jpg",
+	nhanvienResponse, err := controller.nhanVienService.DangNhap(requestBody.Email, requestBody.Password)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
+	// webResponse := model.Response{
+	// 	Code:   http.StatusOK,
+	// 	Status: "Ok",
+	// 	Data:   nhanvienResponse,
+	// }
+	// type UserModel struct {
+	// 	ID          int    `json:"id"`
+	// 	TenDangNhap string `json:"ten_dang_nhap"`
+	// 	Password    string `json:"password"`
+	// 	FirstName   string `json:"firstName"`
+	// 	LastName    string `json:"lastName"`
+	// 	Gender      bool   `json:"gender"`
+	// 	PhoneNumber string `json:"phoneNumber"`
+	// 	Email       string `json:"email"`
+	// 	RoleId      int64  `json:"roleId"`
+	// 	NgaySinh    string `json:"ngay_sinh"`
+	// 	Image       string `json:"image"`
+	// }
+
+	// user := UserModel{
+	// 	ID:          5,
+	// 	TenDangNhap: "nhat_le@gmail.com",
+	// 	Password:    "secret123",
+	// 	FirstName:   "Le",
+	// 	LastName:    "Nhat",
+	// 	Gender:      true,
+	// 	PhoneNumber: "123456789",
+	// 	Email:       "nhat_le@gmail.com",
+	// 	RoleId:      1,
+	// 	NgaySinh:    "2001-10-10",
+	// 	Image:       "profile.jpg",
+	// }
 	// webResponse := model.Response{
 	// 	Code:   http.StatusOK,
 	// 	Status: "Ok",
@@ -72,8 +87,8 @@ func (controller *NhanVienController) Login(ctx *gin.Context) {
 	ctx.Header("Content-Type", "application/json")
 
 	response := make(map[string]interface{})
-	response["user"] = user
-	response["roleId"] = 1
+	response["user"] = nhanvienResponse
+	//response["roleId"] = 1
 	jsonResponse, _ := json.Marshal(response)
 	fmt.Println(string(jsonResponse))
 	// webResponse := model.Response{

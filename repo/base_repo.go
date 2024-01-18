@@ -32,9 +32,11 @@ type PGInterface interface {
 	DanhSachKhachHang() []model.KhachHang
 	TaoKhachHang(req *model.KhachHang) error
 	TimKhachHang(id int, req *model.KhachHang) error
+	LayThongTinKhachHang(IdKhachHang int) *model.KhachHang
 
 	//NhanVien
 	DanhSachNhanVien() []model.NhanVien
+	LayThongTinNhanVien(IdNhanVien int) *model.NhanVien
 
 	//Phong
 	DanhSachPhong() []model.DanhSachPhong
@@ -52,6 +54,13 @@ type PGInterface interface {
 
 	TaoHoaDon(req *model.HoaDon) error
 	DanhSachHoaDon() []model.DanhSachHoaDon
+
+	LayThongTinDangNhap(TenDangNhap, MatKhau string) *model.HeThong
+
+	BaoCaoTheoNgay() []model.BaoCaoTheoNgay
+	BaoCaoTheoThang() []model.BaoCaoTheoNgay
+	BaoCaoTheoTuan() []model.BaoCaoTheoNgay
+	BaoCaoTheoNam() []model.BaoCaoTheoNgay
 }
 
 type RepoPG struct {

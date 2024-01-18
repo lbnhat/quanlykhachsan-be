@@ -62,11 +62,15 @@ func (controller *DatPhongController) DatPhong(ctx *gin.Context) {
 		ctx.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	res := controller.datPhongService.DatPhong(requestBody)
+	err := controller.datPhongService.DatPhong(requestBody)
+	if err != nil {
+		ctx.JSON(400, gin.H{"error": "Đặt phòng thất bại"})
+		return
+	}
 	webResponse := model.Response{
 		Code:   http.StatusOK,
 		Status: "Ok",
-		Data:   res,
+		//Data:   res,
 	}
 	ctx.Header("Content-Type", "application/json")
 	ctx.JSON(http.StatusOK, webResponse)
@@ -81,6 +85,20 @@ func (controller *DatPhongController) DanhSachPhieuDatPhongTuKhachHang(ctx *gin.
 		iduser = 0
 	}
 	phieuDatPhongResponse := controller.datPhongService.DanhSachPhieuDatPhongTuKhach(iduser)
+	webResponse := model.Response{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   phieuDatPhongResponse,
+	}
+	ctx.Header("Content-Type", "application/json")
+	ctx.JSON(http.StatusOK, webResponse)
+
+}
+
+func (controller *DatPhongController) BaoCaoTheoNgay(ctx *gin.Context) {
+	log.Info().Msg("findAll tags")
+	option := ctx.Query("option")
+	phieuDatPhongResponse := controller.datPhongService.BaoCao(option)
 	webResponse := model.Response{
 		Code:   http.StatusOK,
 		Status: "Ok",
