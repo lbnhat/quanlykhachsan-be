@@ -25,13 +25,13 @@ func (LoaiPhong) TableName() string {
 }
 
 type DanhSachPhong struct {
-	IdPhong      int    `json:"id_phong"`
-	IdLoaiPhong  string `json:"id_loai_phong"`
-	SoTang       string `json:"so_tang"`
-	SoPhong      string `json:"so_phong"`
-	TrangThai    string `json:"trang_thai"`
-	HinhAnh      string `json:"hinh_anh"`
-	TenLoaiPhong string `json:"loai_phong"`
-	HangPhong    string `json:"hang_phong"`
-	Gia          string `json:"gia_phong"`
+	IdPhong           int    `json:"id_phong"`
+	IdLoaiPhong       string `json:"id_loai_phong"`
+	SoTang            string `json:"so_tang"`
+	SoPhong           string `json:"so_phong"`
+	TrangThaiDatPhong string `json:"trang_thai_dat_phong"`
+	HinhAnh           string `json:"hinh_anh"`
+	TenLoaiPhong      string `json:"loai_phong"`
+	HangPhong         string `json:"hang_phong"`
+	Gia               string `json:"gia_phong"`
 }
