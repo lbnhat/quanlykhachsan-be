@@ -54,6 +54,7 @@ type PGInterface interface {
 
 	TaoHoaDon(req *model.HoaDon) error
 	DanhSachHoaDon() []model.DanhSachHoaDon
+	ThongTinHoaDon(id int) *model.ThongTinHoaDon
 
 	LayThongTinDangNhap(TenDangNhap, MatKhau string) *model.HeThong
 

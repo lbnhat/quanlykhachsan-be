@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strconv"
 
 	_ "quanlykhachsan/docs"
 	"quanlykhachsan/model"
@@ -24,6 +25,21 @@ func NewHoaDonController(service service.HoaDonServiceInterface) *HoaDonControll
 func (controller *HoaDonController) DanhSachHoaDon(ctx *gin.Context) {
 	log.Info().Msg("findAll tags")
 	hoadonResponse := controller.hoaDonService.DanhSachHoaDon()
+	webResponse := model.Response{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   hoadonResponse,
+	}
+	ctx.Header("Content-Type", "application/json")
+	ctx.JSON(http.StatusOK, webResponse)
+
+}
+
+func (controller *HoaDonController) ThongTinHoaDon(ctx *gin.Context) {
+	log.Info().Msg("findAll tags")
+	id := ctx.Param("id")
+	idHoaDon, _ := strconv.Atoi(id)
+	hoadonResponse := controller.hoaDonService.ThongTinHoaDon(idHoaDon)
 	webResponse := model.Response{
 		Code:   http.StatusOK,
 		Status: "Ok",

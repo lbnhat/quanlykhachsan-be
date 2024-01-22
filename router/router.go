@@ -99,6 +99,7 @@ func NewRouter() *gin.Engine {
 
 	hoadonRouter := baseRouter.Group("/hoa-don")
 	hoadonRouter.GET("", hoadonController.DanhSachHoaDon)
+	hoadonRouter.GET("/thong-tin-chi-tiet/:id", hoadonController.ThongTinHoaDon)
 
 	//mock api
 	mockRouter := baseRouter.Group("/mock")
