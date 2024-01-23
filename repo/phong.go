@@ -89,7 +89,7 @@ func (r *RepoPG) DanhSachPhongTrong(checkinDate, checkoutDate, hangPhong, loaiPh
 				(? between ctpdp.ngay_den and ctpdp.ngay_tra_phong)
 						or (? between ctpdp.ngay_den and ctpdp.ngay_tra_phong)
 							or (? <= ctpdp.ngay_den
-								and ? >= ctpdp.ngay_tra_phong)) `, checkinDate, checkoutDate, checkinDate, checkoutDate).Group("p.id_phong, lp.id_loai_phong").Order("p.so_phong").
+								and ? >= ctpdp.ngay_tra_phong)) `, checkinDate, checkoutDate, checkinDate, checkoutDate).Group("p.id_phong, lp.id_loai_phong").Order("trang_thai_dat_phong, p.so_phong").
 		Find(&phong).Error; err != nil {
 		return nil
 	}
