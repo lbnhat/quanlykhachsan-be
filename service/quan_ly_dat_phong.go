@@ -151,6 +151,13 @@ func (t *DatPhongService) BaoCao(option string) (rs model.BaoCao) {
 	switch option {
 	case "ngay":
 		result := t.repo.BaoCaoTheoNgay()
+		if len(result) == 0 {
+			now := time.Now()
+			result = append(result, model.BaoCaoTheoNgay{
+				Ngay:     now.Format("2006-01-02"),
+				TongTien: 0,
+			})
+		}
 		tongTien := 0
 		for _, v := range result {
 			tongTien += v.TongTien
