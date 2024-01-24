@@ -25,6 +25,13 @@ type DangNhap struct {
 	Password string `json:"password"`
 }
 
+type DangKy struct {
+	Email       string `json:"email"`
+	Password    string `json:"password"`
+	Name        string `json:"name"`
+	PhoneNumber string `json:"phone_number"`
+}
+
 type UserModel struct {
 	ID          int    `json:"id"`
 	TenDangNhap string `json:"ten_dang_nhap"`

@@ -33,6 +33,7 @@ type PGInterface interface {
 	TaoKhachHang(req *model.KhachHang) error
 	TimKhachHang(id int, req *model.KhachHang) error
 	LayThongTinKhachHang(IdKhachHang int) *model.KhachHang
+	CapNhatKhachHang(req *model.KhachHang) error
 
 	//NhanVien
 	DanhSachNhanVien() []model.NhanVien
@@ -57,6 +58,8 @@ type PGInterface interface {
 	ThongTinHoaDon(id int) *model.ThongTinHoaDon
 
 	LayThongTinDangNhap(TenDangNhap, MatKhau string) *model.HeThong
+	KiemTraThongTinDangKy(TenDangNhap string) *model.HeThong
+	TaoTaiKhoan(req *model.HeThong) error
 
 	BaoCaoTheoNgay() []model.BaoCaoTheoNgay
 	BaoCaoTheoThang() []model.BaoCaoTheoNgay

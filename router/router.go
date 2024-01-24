@@ -75,11 +75,12 @@ func NewRouter() *gin.Engine {
 	//Khach Hang
 	khachhangRouter := baseRouter.Group("/khach-hang")
 	khachhangRouter.GET("", khacHangController.DanhSachKhachHang)
+	khachhangRouter.PUT("", khacHangController.CapNhatKhachHang)
 	// Nhan vien
 	nhanvienRouter := baseRouter.Group("/nhan-vien")
 	nhanvienRouter.GET("", nhanVienController.DanhSachNhanVien)
-	nhanvienRouter.POST("/dang-nhap", nhanVienController.Login)
-	nhanvienRouter.POST("/dang-ki", nhanVienController.Login)
+	nhanvienRouter.POST("/dang-nhap", nhanVienController.DangNhap)
+	nhanvienRouter.POST("/dang-ki", nhanVienController.DangKy)
 	// Phong
 
 	phongRouter := baseRouter.Group("/phong")

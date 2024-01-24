@@ -28,6 +28,16 @@ func (r *RepoPG) TaoKhachHang(req *model.KhachHang) error {
 	return nil
 }
 
+func (r *RepoPG) CapNhatKhachHang(req *model.KhachHang) error {
+	tx, cancel := r.DBWithTimeout(context.Background())
+	defer cancel()
+	var err error
+	if err = tx.Updates(&req).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
 func (r *RepoPG) TimKhachHang(id int, req *model.KhachHang) error {
 	tx, cancel := r.DBWithTimeout(context.Background())
 	defer cancel()
